@@ -2,7 +2,9 @@
 
 namespace App;
 
-class Cars
+use Illuminate\Database\Eloquent\Model;
+
+class Cars extends Model
 {
 
     protected $fillable = [
