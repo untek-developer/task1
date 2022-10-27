@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::middleware('auth:api')->group( function () {
+    Route::resource('cars', 'API\CarsController');
+    Route::post('use-car', 'API\UseCarsController@useCar');
+    Route::post('exit-from-car', 'API\UseCarsController@exitFromCar');
+});
