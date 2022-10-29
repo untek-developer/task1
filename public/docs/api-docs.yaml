@@ -17,8 +17,7 @@ securityDefinitions:
     type: apiKey
     name: Authorization
     in: header
-    description: Requests should pass an Authorization header. Default token - ```Bearer wnxnNrP/buVMxe1miiQ8w.JXBrhOC5zeMuYUTNAjZV.MySSA80yTG```
-
+    description: "В каждый запрос будет добавляться заголовок *Authorization*. \n Токены: \n user1 - **Bearer wnxnNrP/buVMxe1miiQ8w.JXBrhOC5zeMuYUTNAjZV.MySSA80yTG**\n user2 - **Bearer kqmQ20JdZ7YwUU9rcWuoboJ42qTBpV2y11yu.8m3xGbF7EI**"
 security:
   - Bearer: []
 tags:
