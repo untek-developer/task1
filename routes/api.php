@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\CarsController;
+use App\Http\Controllers\API\UseCarsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,8 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:api')->group( function () {
-    Route::resource('cars', 'API\CarsController');
-    Route::post('use-car', 'API\UseCarsController@useCar');
-    Route::post('exit-from-car', 'API\UseCarsController@exitFromCar');
+Route::middleware('auth:api')->group(function () {
+    Route::apiResource('cars', CarsController::class);
+    Route::post('use-car', [UseCarsController::class, 'useCar']);
+    Route::post('exit-from-car', [UseCarsController::class, 'exitFromCar']);
 });
