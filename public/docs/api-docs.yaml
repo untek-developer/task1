@@ -27,10 +27,259 @@ tags:
     description: Использование машины
 paths:
   /cars:
-    $ref: 'cars.yaml#/paths/~1cars'
+    get:
+      tags:
+        - Cars
+      summary: Получить список машин
+      parameters:
+        - $ref: '#/parameters/page'
+        - $ref: '#/parameters/limit'
+      responses:
+        200:
+          description: Успешный ответ
+          schema:
+            $ref: '#/definitions/Cars'
+          headers:
+            $ref: '#/responseHeaders/paginate'
+        422:
+          $ref: '#/responses/422UnprocessableEntity'
+        401:
+          $ref: '#/responses/401Unauthorized'
+        403:
+          $ref: '#/responses/403Forbidden'
+        500:
+          $ref: '#/responses/500InternalServerError'
+      post:
+        tags:
+          - Cars
+        summary: Создать новую машину
+        parameters:
+          - $ref: '#/parameters/car'
+        responses:
+          201:
+            $ref: '#/responses/201Created'
+          422:
+            $ref: '#/responses/422UnprocessableEntity'
+          401:
+            $ref: '#/responses/401Unauthorized'
+          403:
+            $ref: '#/responses/403Forbidden'
+          500:
+            $ref: '#/responses/500InternalServerError'
   /cars/{id}:
-    $ref: 'cars.yaml#/paths/~1cars~1{id}'
+    get:
+      tags:
+        - Cars
+      summary: Получить одну машину
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          description: Успешный ответ
+          schema:
+            $ref: '#/definitions/Car'
+        400:
+          $ref: '#/responses/400BadRequest'
+        401:
+          $ref: '#/responses/401Unauthorized'
+        403:
+          $ref: '#/responses/403Forbidden'
+        404:
+          $ref: '#/responses/404NotFound'
+        500:
+          $ref: '#/responses/500InternalServerError'
+      patch:
+        tags:
+          - Cars
+        summary: Редактировать машину
+        parameters:
+          - $ref: '#/parameters/id'
+          - $ref: '#/parameters/car'
+        responses:
+          204:
+            $ref: '#/responses/204NoContent'
+          422:
+            $ref: '#/responses/422UnprocessableEntity'
+          401:
+            $ref: '#/responses/401Unauthorized'
+          403:
+            $ref: '#/responses/403Forbidden'
+          404:
+            $ref: '#/responses/404NotFound'
+          500:
+            $ref: '#/responses/500InternalServerError'
+      delete:
+        tags:
+          - Cars
+        summary: Удалить машину
+        parameters:
+          - $ref: '#/parameters/id'
+        responses:
+          204:
+            $ref: '#/responses/204NoContent'
+          401:
+            $ref: '#/responses/401Unauthorized'
+          403:
+            $ref: '#/responses/403Forbidden'
+          404:
+            $ref: '#/responses/404NotFound'
+          500:
+            $ref: '#/responses/500InternalServerError'
   /use-car/enter:
-    $ref: 'use-car.yaml#/paths/~1enter'
+    post:
+      tags:
+        - Use
+      summary: Сесть в машину
+      parameters:
+        - $ref: '#/parameters/useCar'
+      responses:
+        201:
+          $ref: '#/responses/201Created'
+        422:
+          $ref: '#/responses/422UnprocessableEntity'
+        401:
+          $ref: '#/responses/401Unauthorized'
+        403:
+          $ref: '#/responses/403Forbidden'
+        500:
+          $ref: '#/responses/500InternalServerError'
   /use-car/exit:
-    $ref: 'use-car.yaml#/paths/~1exit'
+    post:
+      tags:
+        - Use
+      summary: Выйти из машины
+      parameters:
+        - $ref: '#/parameters/useCar'
+      responses:
+        201:
+          $ref: '#/responses/201Created'
+        422:
+          $ref: '#/responses/422UnprocessableEntity'
+        401:
+          $ref: '#/responses/401Unauthorized'
+        403:
+          $ref: '#/responses/403Forbidden'
+        500:
+          $ref: '#/responses/500InternalServerError'
+
+parameters:
+  useCar:
+    in: body
+    schema:
+      type: object
+      properties:
+        car_id:
+          type: integer
+          example: 1
+  car:
+    name: car
+    in: body
+    schema:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "BMW M5"
+  id:
+    name: id
+    in: path
+    required: true
+    description: ID записи
+    type: string
+  page:
+    name: page
+    in: query
+    description: Номер текущей страницы
+    required: false
+    type: integer
+    format: int32
+    default: 1
+    minimum: 1
+  limit:
+    name: limit
+    in: query
+    description: Количество записей на страницу
+    required: false
+    type: integer
+    format: int32
+    default: 10
+    minimum: 2
+    maximum: 100
+    multipleOf: 10
+
+definitions:
+  Car:
+    type: object
+    properties:
+      id:
+        type: integer
+        readOnly: true
+        example: 1
+      title:
+        type: string
+        example: "Toyota Camry"
+      user_id:
+        type: integer
+      created_at:
+        type: string
+        example: "2022-10-27T15:03:41.000000Z"
+      updated_at:
+        type: string
+        example: "2022-10-27T15:03:41.000000Z"
+  Cars:
+    type: array
+    items:
+      $ref: '#/definitions/Car'
+  ValidationError:
+    type: object
+    properties:
+      message:
+        type: string
+      errors:
+        type: object
+
+responses:
+  201Created:
+    description: Created — в результате успешного выполнения запроса был создан новый ресурс
+    headers:
+      Location:
+        description: Ссылка на созданную запись
+        type: string
+  204NoContent:
+    description: No Content — сервер успешно обработал запрос, но в ответе были переданы только заголовки без тела сообщения
+    headers:
+      Location:
+        description: Ссылка на созданную запись
+        type: string
+  400BadRequest:
+    description: Bad Request — сервер обнаружил в запросе клиента синтаксическую ошибку
+    schema:
+      $ref: '#/definitions/ValidationError'
+  422UnprocessableEntity:
+    description: Unprocessable Entity — сервер успешно принял запрос, может работать с указанным видом данных (например, в теле запроса находится XML-документ, имеющий верный синтаксис), однако имеется какая-то логическая ошибка, из-за которой невозможно произвести операцию над ресурсом
+    schema:
+      $ref: '#/definitions/ValidationError'
+  401Unauthorized:
+    description: Unauthorized — для доступа к запрашиваемому ресурсу требуется аутентификация
+    schema:
+  403Forbidden:
+    description: Forbidden — сервер понял запрос, но он отказывается его выполнять из-за ограничений в доступе для клиента к указанному ресурсу. Иными словами, клиент не уполномочен совершать операции с запрошенным ресурсом
+    schema:
+  404NotFound:
+    description: Not Found - Сервер понял запрос, но не нашёл соответствующего ресурса по указанному URL
+    schema:
+  500InternalServerError:
+    description: Internal Server Error — любая внутренняя ошибка сервера, которая не входит в рамки остальных ошибок класса
+    schema:
+
+responseHeaders:
+  paginate:
+    X-Pagination-Total-Count:
+      description: Общее количество записей
+      type: integer
+    X-Pagination-Current-Page:
+      description: Номер текущей страницы
+      type: integer
+    X-Pagination-Per-Page:
+      description: Количество записей на страницу
+      type: integer
