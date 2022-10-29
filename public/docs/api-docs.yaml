@@ -1,22 +1,17 @@
-# a demonstration of an API spec with HTTP responses in YAML
 swagger: '2.0'
 info:
   title: Test project
   description: Документация для тестового задания
   version: '1.0.0'
-# the domain of the service
 host: 127.0.0.1:8000
-# array of all schemes that your API supports
 schemes:
   - http
   - https
-# will be prefixed to all paths
 basePath: /api/v1
 consumes:
   - application/json
 produces:
   - application/json
-
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -26,13 +21,11 @@ securityDefinitions:
 
 security:
   - Bearer: []
-
 tags:
   - name: Cars
     description: CRUD-опреации для машин
   - name: Use
     description: Использование машины
-
 paths:
   /cars:
     $ref: 'cars.yaml#/paths/~1cars'

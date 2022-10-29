@@ -10,7 +10,7 @@ paths:
         - $ref: 'app.yaml#/parameters/limit'
       responses:
         200:
-#          description: Success
+          description: Успешный ответ
           schema:
             $ref: '#/definitions/Cars'
           headers:
@@ -50,7 +50,7 @@ paths:
         - $ref: 'app.yaml#/parameters/id'
       responses:
         200:
-#          description: Success
+          description: Успешный ответ
           schema:
             $ref: '#/definitions/Car'
         400:
@@ -105,7 +105,6 @@ parameters:
   car:
     name: car
     in: body
-#    description: An car
     schema:
       type: object
       properties:
