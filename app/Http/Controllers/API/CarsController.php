@@ -4,10 +4,11 @@ namespace App\Http\Controllers\API;
 
 use App\Cars;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CarResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class CarsController extends Controller
+class CarsController extends BaseController
 {
 
     public function index()
@@ -33,36 +34,36 @@ class CarsController extends Controller
             return response()->json('The car is not found!', 404);
         }
 
-        return response()->json($car->toArray(), 200);
+        return response()->json(new CarResource($car), 200);
     }
 
     public function store(Request $request)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
+        $validator = Validator::make($request->all(), [
             'title' => 'required|unique:cars|max:255',
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors()->getMessages(), 422);
+            return response()->json($validator->errors(), 422);
         }
 
         $car = new Cars();
         $car->fill($validator->validated());
         $car->save();
 
-        return response()->json($car->toArray(), 201, [
+        $headers = [
             'Location' => url("/api/cars/{$car->id}"),
-        ]);
+        ];
+
+        return response()->json(new CarResource($car), 201, $headers);
     }
 
     public function update(Request $request, Cars $car)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
+        $validator = Validator::make($request->all(), [
             'title' => 'required|unique:cars|max:255',
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors()->getMessages(), 422);
+            return response()->json($validator->errors(), 422);
         }
 
         $car->fill($validator->validated());

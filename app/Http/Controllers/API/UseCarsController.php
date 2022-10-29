@@ -8,19 +8,19 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class UseCarsController extends Controller
+class UseCarsController extends BaseController
 {
 
     public function exitFromCar(Guard $auth, Request $request)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
+        $validator = Validator::make($request->all(), [
             'car_id' => 'required|integer',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors()->getMessages(), 422);
         }
-        $carId = $input['car_id'];
+
+        $carId = $validator->validated()['car_id'];
 
         /** @var Cars $car */
         $car = Cars::find($carId);
@@ -44,14 +44,13 @@ class UseCarsController extends Controller
 
     public function useCar(Guard $auth, Request $request)
     {
-        $input = $request->all();
-        $validator = Validator::make($input, [
+        $validator = Validator::make($request->all(), [
             'car_id' => 'required|integer',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors()->getMessages(), 422);
         }
-        $carId = $input['car_id'];
+        $carId = $validator->validated()['car_id'];
 
         /** @var Cars $car */
         $car = Cars::find($carId);
