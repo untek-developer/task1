@@ -22,6 +22,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::middleware('auth:api')->group(function () {
     Route::apiResource('cars', CarsController::class);
-    Route::post('use-car', [UseCarsController::class, 'useCar']);
-    Route::post('exit-from-car', [UseCarsController::class, 'exitFromCar']);
+    Route::post('use-car/enter', [UseCarsController::class, 'useCar']);
+    Route::post('use-car/exit', [UseCarsController::class, 'exitFromCar']);
 });
