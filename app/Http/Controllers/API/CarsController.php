@@ -17,7 +17,7 @@ class CarsController extends BaseController
             'limit' => 'numeric|min:2|max:100',
         ]);
 
-        $cars = Cars::query()->paginate($validator->validated()['limit']);
+        $cars = Cars::query()->paginate($validator->validated()['limit'] ?? 15);
 
         $headers = [
             'X-Pagination-Total-Count' => $cars->total(),
