@@ -64,4 +64,16 @@ class CarsListTest extends TestCase
             ],
         ]);
     }
+
+    public function testPaginatePage2()
+    {
+        $response = $this->get('/api/v1/cars?page=2', $this->authHeaders());
+
+        $response->assertStatus(200);
+        $response->assertHeader('X-Pagination-Total-Count', 4);
+        $response->assertHeader('X-Pagination-Current-Page', 2);
+        $response->assertHeader('X-Pagination-Per-Page', 15);
+
+        $response->assertJsonCount(0);
+    }
 }
