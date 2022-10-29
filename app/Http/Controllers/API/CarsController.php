@@ -13,7 +13,11 @@ class CarsController extends BaseController
 
     public function index()
     {
-        $cars = Cars::query()->paginate(15);
+        $validator = Validator::make($request->all(), [
+            'limit' => 'numeric|min:2|max:100',
+        ]);
+
+        $cars = Cars::query()->paginate($validator->validated()['limit']);
 
         $headers = [
             'X-Pagination-Total-Count' => $cars->total(),
