@@ -2,7 +2,7 @@
 swagger: '2.0'
 info:
   title: Test project
-  description: Sample response templates for all CRUD operations
+  description: Документация для тестового задания
   version: '1.0.0'
 # the domain of the service
 host: 127.0.0.1:8000
@@ -16,3 +16,29 @@ consumes:
   - application/json
 produces:
   - application/json
+
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: Requests should pass an Authorization header. Default token - ```Bearer wnxnNrP/buVMxe1miiQ8w.JXBrhOC5zeMuYUTNAjZV.MySSA80yTG```
+
+security:
+  - Bearer: []
+
+tags:
+  - name: Cars
+    description: CRUD-опреации для машин
+  - name: Use
+    description: Использование машины
+
+paths:
+  /cars:
+    $ref: 'cars.yaml#/paths/~1cars'
+  /cars/{id}:
+    $ref: 'cars.yaml#/paths/~1cars~1{id}'
+  /use-car/enter:
+    $ref: 'use-car.yaml#/paths/~1enter'
+  /use-car/exit:
+    $ref: 'use-car.yaml#/paths/~1exit'

@@ -1,0 +1,89 @@
+
+responseHeaders:
+  paginate:
+    X-Pagination-Total-Count:
+      description: Общее количество записей
+      type: integer
+    X-Pagination-Current-Page:
+      description: Номер текущей страницы
+      type: integer
+    X-Pagination-Per-Page:
+      description: Количество записей на страницу
+      type: integer
+
+parameters:
+  id:
+    name: id
+    in: path
+    required: true
+    description: ID записи
+    type: string
+  page:
+    name: page
+    in: query
+    description: Номер текущей страницы
+    required: false
+    type: integer
+    format: int32
+    default: 1
+    minimum: 1
+  limit:
+    name: limit
+    in: query
+    description: Количество записей на страницу
+    required: false
+    type: integer
+    format: int32
+    default: 10
+    minimum: 2
+    maximum: 100
+    multipleOf: 10
+
+responses:
+  201Created:
+    description: Created — в результате успешного выполнения запроса был создан новый ресурс
+    headers:
+      Location:
+        description: Ссылка на созданную запись
+        type: string
+  204NoContent:
+    description: No Content — сервер успешно обработал запрос, но в ответе были переданы только заголовки без тела сообщения
+    headers:
+      Location:
+        description: Ссылка на созданную запись
+        type: string
+  400BadRequest:
+    description: Bad Request — сервер обнаружил в запросе клиента синтаксическую ошибку
+    schema:
+      $ref: '#/definitions/ValidationError'
+  422UnprocessableEntity:
+    description: Unprocessable Entity — сервер успешно принял запрос, может работать с указанным видом данных (например, в теле запроса находится XML-документ, имеющий верный синтаксис), однако имеется какая-то логическая ошибка, из-за которой невозможно произвести операцию над ресурсом
+    schema:
+      $ref: '#/definitions/ValidationError'
+  401Unauthorized:
+    description: Unauthorized — для доступа к запрашиваемому ресурсу требуется аутентификация
+    schema:
+  403Forbidden:
+    description: Forbidden — сервер понял запрос, но он отказывается его выполнять из-за ограничений в доступе для клиента к указанному ресурсу. Иными словами, клиент не уполномочен совершать операции с запрошенным ресурсом
+    schema:
+  404NotFound:
+    description: Not Found - Сервер понял запрос, но не нашёл соответствующего ресурса по указанному URL
+    schema:
+  500InternalServerError:
+    description: Internal Server Error — любая внутренняя ошибка сервера, которая не входит в рамки остальных ошибок класса
+    schema:
+
+
+definitions:
+  Message:
+    type: object
+    properties:
+      message:
+        type: string
+  ValidationError:
+    type: object
+    properties:
+      message:
+        type: string
+      errors:
+        type: object
