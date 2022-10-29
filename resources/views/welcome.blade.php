@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="links">
-                    <a href="/api/documentation#/default">API документация (Swagger)</a>
+                    <a href="/api/documentation">API документация (Swagger)</a>
                 </div>
             </div>
         </div>
