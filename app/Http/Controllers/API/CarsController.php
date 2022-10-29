@@ -12,8 +12,16 @@ class CarsController extends Controller
 
     public function index()
     {
-        $cars = Cars::all();
-        return response()->json($cars->toArray(), 200);
+        $cars = Cars::query()->paginate(15);
+
+        $headers = [
+            'X-Pagination-Total-Count' => $cars->total(),
+//            'X-Pagination-Page-Count' => $cars->lastPage(),
+            'X-Pagination-Current-Page' => $cars->currentPage(),
+            'X-Pagination-Per-Page' => $cars->perPage(),
+        ];
+
+        return response()->json(CarResource::collection($cars), 200, $headers);
     }
 
     public function show($id)
