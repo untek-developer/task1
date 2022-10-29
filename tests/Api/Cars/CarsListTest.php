@@ -7,6 +7,12 @@ use Tests\TestCase;
 class CarsListTest extends TestCase
 {
 
+    public function testUnAuthorized()
+    {
+        $response = $this->getJson('/api/v1/cars');
+        $response->assertStatus(401);
+    }
+
     public function testAll()
     {
         $response = $this->get('/api/v1/cars', $this->authHeaders());

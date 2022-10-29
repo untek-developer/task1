@@ -7,6 +7,12 @@ use Tests\TestCase;
 class CarsItemTest extends TestCase
 {
 
+    public function testUnAuthorized()
+    {
+        $response = $this->getJson('/api/v1/cars/1');
+        $response->assertStatus(401);
+    }
+
     public function testItem1()
     {
         $response = $this->get('/api/v1/cars/1', $this->authHeaders());
@@ -29,7 +35,7 @@ class CarsItemTest extends TestCase
         ]);
     }
 
-    public function testItem2222()
+    public function testNotFoundItem()
     {
         $response = $this->get('/api/v1/cars/2222', $this->authHeaders());
         $response->assertStatus(404);
