@@ -85,7 +85,12 @@
                 </div>
 
                 <div class="links">
-                    <a href="/api/documentation">API документация (Swagger)</a>
+                    <a href="/api/documentation">
+                        API документация (локальный Swagger)
+                    </a>
+                    <a href="https://app.swaggerhub.com/apis/THEYAMSHIKOV/test-project/1.0.0">
+                        API документация (глобальный Swagger)
+                    </a>
                 </div>
             </div>
         </div>
