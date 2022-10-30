@@ -1,10 +1,21 @@
 # Тестовое задание
 
-Установка:
+## Установка
+
+Выполните команды:
 
     git clone git@github.com:zndeveloper/task1.git .
     composer install
+    cp .env.example .env
+    php artisan key:generate
+
+Откройте файл `.env` и настройте соединение с БД.
+
+Запуск миграций БД:
+
     php artisan migrate
+
+## Запуск
 
 Запуск сервера:
 
