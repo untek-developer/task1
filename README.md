@@ -29,3 +29,4 @@
 
 * [API документация (локальный Swagger)](http://127.0.0.1:8000/api/documentation)
 * [API документация (глобальный Swagger)](https://app.swaggerhub.com/apis/THEYAMSHIKOV/test-project/1.0.0)
+* [Контракты Rest API](https://github.com/zndoc/rest-api/blob/master/docs/contract/README.md)
