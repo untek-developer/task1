@@ -49,23 +49,23 @@ paths:
           $ref: '#/responses/403Forbidden'
         500:
           $ref: '#/responses/500InternalServerError'
-      post:
-        tags:
-          - Cars
-        summary: Создать новую машину
-        parameters:
-          - $ref: '#/parameters/car'
-        responses:
-          201:
-            $ref: '#/responses/201Created'
-          422:
-            $ref: '#/responses/422UnprocessableEntity'
-          401:
-            $ref: '#/responses/401Unauthorized'
-          403:
-            $ref: '#/responses/403Forbidden'
-          500:
-            $ref: '#/responses/500InternalServerError'
+    post:
+      tags:
+        - Cars
+      summary: Создать новую машину
+      parameters:
+        - $ref: '#/parameters/car'
+      responses:
+        201:
+          $ref: '#/responses/201Created'
+        422:
+          $ref: '#/responses/422UnprocessableEntity'
+        401:
+          $ref: '#/responses/401Unauthorized'
+        403:
+          $ref: '#/responses/403Forbidden'
+        500:
+          $ref: '#/responses/500InternalServerError'
   /cars/{id}:
     get:
       tags:
@@ -88,43 +88,43 @@ paths:
           $ref: '#/responses/404NotFound'
         500:
           $ref: '#/responses/500InternalServerError'
-      patch:
-        tags:
-          - Cars
-        summary: Редактировать машину
-        parameters:
-          - $ref: '#/parameters/id'
-          - $ref: '#/parameters/car'
-        responses:
-          204:
-            $ref: '#/responses/204NoContent'
-          422:
-            $ref: '#/responses/422UnprocessableEntity'
-          401:
-            $ref: '#/responses/401Unauthorized'
-          403:
-            $ref: '#/responses/403Forbidden'
-          404:
-            $ref: '#/responses/404NotFound'
-          500:
-            $ref: '#/responses/500InternalServerError'
-      delete:
-        tags:
-          - Cars
-        summary: Удалить машину
-        parameters:
-          - $ref: '#/parameters/id'
-        responses:
-          204:
-            $ref: '#/responses/204NoContent'
-          401:
-            $ref: '#/responses/401Unauthorized'
-          403:
-            $ref: '#/responses/403Forbidden'
-          404:
-            $ref: '#/responses/404NotFound'
-          500:
-            $ref: '#/responses/500InternalServerError'
+    patch:
+      tags:
+        - Cars
+      summary: Редактировать машину
+      parameters:
+        - $ref: '#/parameters/id'
+        - $ref: '#/parameters/car'
+      responses:
+        204:
+          $ref: '#/responses/204NoContent'
+        422:
+          $ref: '#/responses/422UnprocessableEntity'
+        401:
+          $ref: '#/responses/401Unauthorized'
+        403:
+          $ref: '#/responses/403Forbidden'
+        404:
+          $ref: '#/responses/404NotFound'
+        500:
+          $ref: '#/responses/500InternalServerError'
+    delete:
+      tags:
+        - Cars
+      summary: Удалить машину
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        204:
+          $ref: '#/responses/204NoContent'
+        401:
+          $ref: '#/responses/401Unauthorized'
+        403:
+          $ref: '#/responses/403Forbidden'
+        404:
+          $ref: '#/responses/404NotFound'
+        500:
+          $ref: '#/responses/500InternalServerError'
   /use-car/enter:
     post:
       tags:
